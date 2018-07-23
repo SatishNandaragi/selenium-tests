@@ -16,6 +16,8 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
@@ -92,6 +94,7 @@ public class ForumBoardPage extends BasePageObject {
         true,
         driver
     );
+
     return new ForumThreadPageObject(driver);
   }
 
@@ -116,6 +119,7 @@ public class ForumBoardPage extends BasePageObject {
     miniEditor.writeMiniEditor(message);
     driver.switchTo().defaultContent();
     clickPostNotitleButton();
+
     Log.log(
         "startDiscussionWithoutTitle",
         "discussion with message: " + message + " without title, posted",
@@ -125,16 +129,25 @@ public class ForumBoardPage extends BasePageObject {
     return new ForumThreadPageObject(driver);
   }
 
+  private void waitUntilRedirectedToNewThread() {
+    WebDriverWait threadRedirectWait = new WebDriverWait(driver, 20);
+    threadRedirectWait.until(ExpectedConditions.urlContains("Thread"));
+  }
+
   public void clickPostButton() {
     wait.forElementClickable(postButton);
     scrollAndClick(postButton);
     Log.log("clickPostButton", "post button clicked", true, driver);
+
+    waitUntilRedirectedToNewThread();
   }
 
   public void clickPostNotitleButton() {
     wait.forElementClickable(postButton);
     scrollAndClick(postButton);
     scrollAndClick(postButton);
+
+    waitUntilRedirectedToNewThread();
   }
 
   public void startDiscussionWithImage(String title) {

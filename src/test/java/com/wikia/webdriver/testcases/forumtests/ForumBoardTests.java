@@ -78,12 +78,12 @@ public class ForumBoardTests extends NewTestTemplate {
   @Execute(asUser = User.SUS_REGULAR_USER)
   public void UserCanFollowDiscussionOnForum() {
     ForumBoardPage forumBoard = new ForumBoardPage();
+
     String boardTitle = forumBoard.createNew(User.SUS_ADMIN);
 
     forumBoard.open(boardTitle);
 
     forumBoard.startDiscussion("A nice discussion", "A nice Message", false);
-
     forumBoard.open(boardTitle);
 
     forumBoard.unfollowIfDiscussionIsFollowed(1);

@@ -70,7 +70,7 @@ public class VetOptionsComponentObject extends AddMediaModalComponentObject {
   }
 
   private void clickRetunToEditing() {
-    wait.forElementVisible(returnToEditing);
+    wait.forElementVisible(returnToEditing, 30);
     scrollAndClick(returnToEditing);
     Log.log("clickReturnToEditing", "return to editing button clicked", true, driver);
   }
